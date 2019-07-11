@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="view">#d89467</color>
+
+    <color name="black">#ff000000</color>
+    <color name="blackDark">#000000</color>
+    <color name="blackLight">#484848</color>
+    <color name="white">#ffffff</color>
+    <color name="colorBlack">#959595</color>
+
+    <color name="xam">#808080</color>
+    <color name="xam_1">#9B9999</color>
+    <color name="red">#FFB6B6</color>
+    <color name="red_1">#FF1E1E</color>
+
+    <color name="a_1">#E74C3C</color>
+    <color name="a_2">#E67E22</color>
+    <color name="a_3">#F1C40F</color>
+    <color name="a_4">#2ECC71</color>
+    <color name="a_5">#1ABC9C</color>
+    <color name="a_6">#3498DB</color>
+    <color name="a_7">#9B59B6</color>
+    <color name="a_00">#676767</color>
+</resources>

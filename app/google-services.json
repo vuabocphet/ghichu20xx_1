@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "177785949749",
+    "firebase_url": "https://onlinestore-3ac1a.firebaseio.com",
+    "project_id": "onlinestore-3ac1a",
+    "storage_bucket": "onlinestore-3ac1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177785949749:android:78639b1bbeaa7e3f",
+        "android_client_info": {
+          "package_name": "com.nguyentinhdeveloper.ghichu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177785949749-4pcr9dnjagljl8jk91rm9f361c17im3r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nguyentinhdeveloper.ghichu",
+            "certificate_hash": "dbb98d431983e0205079f57909afd3f893d8124b"
+          }
+        },
+        {
+          "client_id": "177785949749-qr6d8d985udcimc1t3o0v4oi2p6ng2r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5wEp1VhdH00UZz-Tss1iktNh2Ne82Hwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177785949749-qr6d8d985udcimc1t3o0v4oi2p6ng2r3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177785949749:android:90cee973ae005618",
+        "android_client_info": {
+          "package_name": "com.vuabocphet.noteonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177785949749-utrfuf8i41qnpfe2eul1r09ln0kaalqo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vuabocphet.noteonline",
+            "certificate_hash": "fd9d75b97351aabdcef4e529e6244578d2b54eec"
+          }
+        },
+        {
+          "client_id": "177785949749-qr6d8d985udcimc1t3o0v4oi2p6ng2r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5wEp1VhdH00UZz-Tss1iktNh2Ne82Hwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177785949749-qr6d8d985udcimc1t3o0v4oi2p6ng2r3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177785949749:android:085b67569f2eb37b",
+        "android_client_info": {
+          "package_name": "com.vuabocphet.noteonline20xx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177785949749-bo3a3unputqu5nb78hdrlgecc4t2mgp3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vuabocphet.noteonline20xx",
+            "certificate_hash": "dbb98d431983e0205079f57909afd3f893d8124b"
+          }
+        },
+        {
+          "client_id": "177785949749-qr6d8d985udcimc1t3o0v4oi2p6ng2r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5wEp1VhdH00UZz-Tss1iktNh2Ne82Hwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177785949749-qr6d8d985udcimc1t3o0v4oi2p6ng2r3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

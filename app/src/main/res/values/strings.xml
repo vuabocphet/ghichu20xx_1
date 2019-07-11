@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Ghi chú</string>
+    <string name="loichuc">Chúc bạn luôn có những trải nhiệm tuyệt vời</string>
+    <string name="loichuc_1">Chúc bạn một buổi sáng tốt lành</string>
+    <string name="loichuc_2">Bữa trưa vui vẻ</string>
+    <string name="loichuc_3">Chúc bạn một buổi tối ấm áp và tuyệt vời</string>
+    <string name="good">Good</string>
+    <string name="morning">Morning</string>
+    <string name="afternoon">Afternoon</string>
+    <string name="evening">Evening</string>
+    <string name="chude">Chủ đề</string>
+    <string name="date">Thứ 2 02/thg 7/2019 22:25</string>
+
+    <string name="introduction">Chào mừng \nđến \nGhi Chú</string>
+    <string name="intro">Các ghi chú hằng ngày của bạn được đồng bộ với tài khoản khi bạn đăng nhập Facebook...</string>
+    <string name="hinhanh">Thêm được hình ảnh</string>
+    <string name="hengio">Nhắc nhở ghi chú</string>
+    <string name="loginfb">Đăng nhập Facebook</string>
+    <string name="letgo">Bắt đầu nào!</string>
+    <string name="danhdau">Đánh dấu những ghi chú quan trọng</string>
+    <string name="dev_name">NguyenTinh Developer</string>
+    <string name="dieukhoan">Đồng ý với</string>
+    <string name="dieukhoan_a">điều khoản người dùng</string>
+
+    <string name="facebook_app_id">1821945707916485</string>
+    <string name="fb_login_protocol_scheme">fb1821945707916485</string>
+    <string name="ghichu">Ghi chú hằng ngày</string>
+    <string name="introduc">Giới thiệu</string>
+    <string name="share">Chia sẻ</string>
+    <string name="comment">Đánh giá</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="exit">Thoát</string>
+    <string name="soluong">100 ghi chú</string>
+    <string name="ngaydangki">Ngày sử dụng Thứ 2 10/7/2019 10:28</string>
+    <string name="nointernet">No internet</string>
+
+    <string name="save">Hoàn tất</string>
+    <string name="or">|</string>
+    <string name="note">Tiêu đề</string>
+    <string name="note_a">Mô tả chi tiết . . .</string>
+    <string name="err">Tối đa chỉ 50 kí tự</string>
+</resources>

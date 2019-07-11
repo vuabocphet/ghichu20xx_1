@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/layoutDrawer"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:background="@color/black"
+    tools:context=".HomeNote"
+    >
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <FrameLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+           <ImageView
+               android:id="@+id/imageView"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:scaleType="centerCrop"
+               android:src="@drawable/binhminh_img" />
+
+       </FrameLayout>
+
+
+       <LinearLayout
+           android:id="@+id/linearLayout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="40dp"
+           android:orientation="horizontal">
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/gotham"
+                   android:text="@string/good"
+                   android:textColor="#ffffff"
+                   android:textSize="32sp" />
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/textView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentTop="true"
+                   android:layout_centerHorizontal="true"
+                   android:fontFamily="@font/gotham"
+                   android:text="@string/morning"
+                   android:textColor="#ffffff"
+                   android:textSize="32sp" />
+
+               <View
+                   android:id="@+id/layout_view"
+                   android:layout_width="match_parent"
+                   android:layout_height="2dp"
+                   android:layout_marginTop="2dp"
+                   android:background="#deff00" />
+
+           </LinearLayout>
+
+
+       </LinearLayout>
+
+       <TextView
+           android:id="@+id/loichuc"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/linearLayout"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="4dp"
+           android:fontFamily="@font/calibri"
+           android:gravity="center"
+           android:text="@string/loichuc"
+           android:textColor="#9affffff"
+           android:textSize="10sp" />
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recyclerView"
+           android:layout_marginTop="10dp"
+           android:background="@null"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_below="@id/loichuc">
+
+       </androidx.recyclerview.widget.RecyclerView>
+       <ImageView
+           android:layout_marginTop="10dp"
+           android:layout_marginLeft="10dp"
+           android:id="@+id/starMenu"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:src="@drawable/menu_ic"/>
+
+       <RelativeLayout
+           android:id="@+id/addnote"
+           android:layout_alignParentRight="true"
+           android:layout_margin="10dp"
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:background="@drawable/custom_gradient_a">
+           <ImageView
+               android:id="@+id/add_a"
+               android:layout_centerInParent="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/vd_fb_add"/>
+
+
+       </RelativeLayout>
+       <TextView
+           android:id="@+id/sNote"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="100 Ghi Chú"
+           android:textColor="@color/white"
+           android:textStyle="bold"
+           android:textSize="16dp"
+           android:fontFamily="@font/gotham"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="15dp"/>
+   </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_gravity="start"
+        app:headerLayout="@layout/heard_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/menu_items"
+        android:id="@+id/nav_view">
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/style_toolbar_c"
+    android:layout_margin="3dp"
+    android:id="@+id/idUser"
+    android:padding="5dp"
+    >
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           
+           <RelativeLayout
+               android:layout_centerVertical="true"
+               android:id="@+id/layout"
+               android:background="@drawable/custom_gradient_a"
+               android:layout_width="50dp"
+               android:layout_height="50dp">
+               <TextView
+                   android:id="@+id/stt"
+                   android:textSize="18sp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="1"
+                   android:layout_centerInParent="true"
+                   android:textStyle="bold"
+                   android:fontFamily="@font/gotham"
+                   android:textColor="@color/black"/>
+           </RelativeLayout>
+
+           <TextView
+               android:ellipsize="end"
+               android:padding="1dp"
+               android:maxLines="1"
+               android:id="@+id/subject"
+               android:textStyle="bold"
+               android:layout_marginTop="5dp"
+               android:textSize="18sp"
+               android:fontFamily="@font/gotham"
+               android:textColor="@color/black"
+               android:layout_marginLeft="2dp"
+               android:layout_toRightOf="@id/layout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/chude"/>
+
+           <TextView
+               android:id="@+id/txtDate"
+               android:layout_below="@id/subject"
+               android:layout_marginTop="2dp"
+               android:textSize="12dp"
+               android:fontFamily="@font/calibri"
+               android:textColor="@color/black"
+               android:alpha="0.6"
+               android:layout_marginLeft="2dp"
+               android:layout_toRightOf="@id/layout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/date"/>
+           
+           <ImageView
+               android:layout_marginLeft="2dp"
+               android:src="@drawable/star_yes"
+               android:id="@+id/danhdau"
+               android:layout_width="16dp"
+               android:layout_height="16dp"
+               android:layout_toRightOf="@id/txtDate"
+               android:layout_below="@id/subject"/>
+
+           <ImageView
+               android:visibility="gone"
+               android:id="@+id/menu"
+               android:layout_marginTop="5dp"
+               android:layout_alignParentRight="true"
+               android:layout_width="20dp"
+               android:layout_height="20dp"
+               android:src="@android:drawable/ic_menu_add"/>
+       </RelativeLayout>
+
+       <LinearLayout
+           android:layout_marginTop="5dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+           
+           <TextView
+               android:id="@+id/txtNote"
+               android:maxLines="5"
+               android:ellipsize="end"
+               android:textSize="15sp"
+               android:textColor="@color/black"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content" />
+           
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <ImageView
+                   android:id="@+id/img"
+                   android:layout_width="match_parent"
+                   android:layout_height="250dp"
+                   android:visibility="gone"/>
+
+               <ProgressBar
+                   android:visibility="gone"
+                  android:background="@drawable/custom_gradient_a"
+                   android:id="@+id/aaa"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerInParent="true"/>
+           </RelativeLayout>
+           
+           
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+
+
+
+</RelativeLayout>
