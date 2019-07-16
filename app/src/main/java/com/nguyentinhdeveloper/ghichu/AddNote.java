@@ -2,12 +2,14 @@ package com.nguyentinhdeveloper.ghichu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,6 +35,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -83,6 +86,7 @@ public class AddNote extends DeclareVariable implements Runnable {
     private FloatingActionButton fab;
     private TextView seekBarHint;
     private LoadingDailog dialogx;
+    private ModelNote modelNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +94,6 @@ public class AddNote extends DeclareVariable implements Runnable {
         setContentView(R.layout.activity_add_note);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Bungee.fade(this);
-
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl("gs://onlinestore-3ac1a.appspot.com");
         sharedPreferences = getSharedPreferences("DATA", MODE_PRIVATE);
@@ -118,6 +121,7 @@ public class AddNote extends DeclareVariable implements Runnable {
         //setGood();
         click();
         star();
+        getDATA();
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -230,6 +234,10 @@ public class AddNote extends DeclareVariable implements Runnable {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Vibrator vibratora = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibratora.hasVibrator()) {
+                    vibratora.vibrate(150);
+                }
                 date.startAnimation(zoom);
                 finish();
             }
@@ -314,6 +322,10 @@ public class AddNote extends DeclareVariable implements Runnable {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Vibrator vibratora = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        if (vibratora.hasVibrator()) {
+                            vibratora.vibrate(150);
+                        }
                         if (new CheckInternet().isInternetConnection(AddNote.this)) {
                             LoadingDailog.Builder loadBuilder = new LoadingDailog.Builder(AddNote.this)
                                     .setMessage("Đang lưu")
@@ -331,19 +343,37 @@ public class AddNote extends DeclareVariable implements Runnable {
                                 uploadAudio(pathAudio);
                             }
                             if (pathAudio.equals("") && path.equals("")) {
-                                Log.e("3", "3");
-                                ModelNote model = new ModelNote("" + Calendar.getInstance().getTimeInMillis(), subject.getText().toString().trim(), date.getText().toString().trim(), note.getText().toString(), "", "", starcheck);
-                                mDataBase.child(id_User_FB).child("GhiChu").child(model.getId()).setValue(model);
-                                new Timer().schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        finish();
-                                    }
-                                }, 1000);
+                                if (modelNote==null){
+                                    Log.e("3", "3");
+                                    ModelNote model = new ModelNote("" + Calendar.getInstance().getTimeInMillis(), subject.getText().toString().trim(), date.getText().toString().trim(), note.getText().toString(), "", "", starcheck);
+                                    mDataBase.child(id_User_FB).child("GhiChu").child(model.getId()).setValue(model);
+                                    new Timer().schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            finish();
+                                        }
+                                    }, 500);
+                                }else {
+                                    ModelNote model = new ModelNote(modelNote.getId(), subject.getText().toString().trim(), date.getText().toString().trim(), note.getText().toString(), "", "", starcheck);
+                                    updateFirebase(model.getId(),model);
+                                    new Timer().schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            finish();
+                                        }
+                                    }, 500);
+                                }
                             }
                             if (!path.equals("") && !pathAudio.equals("")) {
-                                Log.e("4", "4");
-                                uploadImage(path, 1);
+
+                                if (modelNote==null){
+                                    Log.e("4", "4");
+                                    uploadImage(path, 1);
+                                }else {
+                                    //code...update
+                                }
+
+
                             }
                         }
 
@@ -683,6 +713,75 @@ public class AddNote extends DeclareVariable implements Runnable {
         mediaPlayer = null;
     }
 
+    @SuppressLint("RestrictedApi")
+    private void getDATA() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            modelNote = (ModelNote) intent.getSerializableExtra("list");
+
+
+            if (modelNote != null) {
+                subject.setText(modelNote.getSubject());
+                note.setText(modelNote.getNode());
+                note.setText(modelNote.getNode());
+                note.setEnabled(true);
+                note.setAlpha(1f);
+                save.setText(getString(R.string.edit));
+                save.setTextColor(getResources().getColor(R.color.colorAccent));
+                save.setAlpha(1f);
+                starcheck = modelNote.getStar();
+                if (modelNote.getStar().equals("yes")) {
+                    isStar = false;
+                    star.setImageResource(R.drawable.star_yes);
+                }
+                Transformation transformation = new RoundedTransformationBuilder()
+                        .borderColor(Color.BLACK)
+                        .borderWidthDp(0)
+                        .cornerRadiusDp(10)
+                        .oval(false)
+                        .build();
+                if (!modelNote.getImg().isEmpty() && modelNote.getImg().startsWith("https:")) {
+                    Picasso.get().load(modelNote.getImg()).fit().transform(transformation)
+                            .centerCrop().placeholder(R.drawable.noimg)
+                            .error(R.drawable.noimg).into(img);
+                    img.setVisibility(View.VISIBLE);
+                    path = modelNote.getImg();
+                }
+                if (modelNote.getImg().isEmpty()) {
+                    img.setVisibility(View.GONE);
+                }
+
+                if (modelNote.getAudio().isEmpty()){
+
+                }else {
+                    fab.setVisibility(View.VISIBLE);
+                    seekBarHint.setVisibility(View.VISIBLE);
+                    seekBar.setVisibility(View.VISIBLE);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            playSong(Uri.parse(modelNote.getAudio()));
+                        }
+                    });
+                    pathAudio = modelNote.getAudio();
+                }
+
+
+            } else {
+                // ... click();
+            }
+        }
+    }
+
+
+    public void updateFirebase(String mID, ModelNote noteModel) {
+        if (!id_User_FB.isEmpty()) {
+            DatabaseReference drNote = FirebaseDatabase.getInstance().getReference(id_User_FB).child("GhiChu").child(mID);
+            drNote.setValue(noteModel);
+            finish();
+        }
+
+    }
 
 
 }

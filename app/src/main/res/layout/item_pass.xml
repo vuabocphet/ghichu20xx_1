@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/layout_pass"
+    android:background="@drawable/custom_gradient_a"
+    >
+
+    <TextView
+        android:id="@+id/txtEdit"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:fontFamily="@font/gotham"
+        android:gravity="center"
+        android:text="@string/one"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+</LinearLayout>

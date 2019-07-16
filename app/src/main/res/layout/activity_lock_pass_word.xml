@@ -12,7 +12,7 @@
         android:layout_width="84dp"
         android:layout_height="84dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="35dp"
         android:src="@drawable/logo_note" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:maxLines="1"
@@ -43,39 +43,106 @@
         android:textColor="@color/white"
         android:textSize="16sp" />
 
-    <com.andrognito.pinlockview.IndicatorDots
-        android:id="@+id/indicator_dots"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_name"
+
+
+    <LinearLayout
+        android:id="@+id/a"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
-
-
-
-    <com.andrognito.pinlockview.PinLockView
-        android:id="@+id/pin_lock_view"
-        android:layout_width="wrap_content"
+        android:layout_below="@id/passi"
+        android:layout_marginTop="20dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/indicator_dots"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        app:keypadButtonSize="72dp"
-        app:keypadShowDeleteButton="true"
-        app:keypadTextColor="@color/white"
-        app:keypadTextSize="18dp" />
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/p1"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/custom_pass"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="1"/>
+        <View
+            android:id="@+id/p2"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/custom_pass"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:id="@+id/p3"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/custom_pass"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:id="@+id/p4"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/custom_pass"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="1"/>
 
 
-    <Button
-        android:id="@+id/clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="Cài lại"
-        android:textAllCaps="false"
+
+
+    </LinearLayout>
+    <GridView
+        android:layout_above="@+id/b"
+        android:verticalSpacing="20dp"
+        android:gravity="center"
+        android:numColumns="3"
+        android:id="@+id/grid"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:padding="5dp"
+        android:layout_below="@+id/a"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </GridView>
+
+
+    <RelativeLayout
+        android:id="@+id/b"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
+
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:background="@drawable/custom_gradient_a"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/delete"
+           android:visibility="gone"
+            android:textStyle="bold"
+            android:id="@+id/delete"
+            android:background="@drawable/custom_gradient_a"
+            android:clickable="true"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/quenpass"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu?"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+
+            />
+    </RelativeLayout>
+
+
+
 
 </RelativeLayout>

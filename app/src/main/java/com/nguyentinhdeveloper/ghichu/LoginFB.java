@@ -1,9 +1,12 @@
 package com.nguyentinhdeveloper.ghichu;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +28,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -33,11 +37,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -49,6 +55,8 @@ public class LoginFB extends DeclareVariable {
     private Button letgo;
     private String facebookUserId = "";
     private TextView dieukhoan;
+    private DatabaseReference mDataBasexxx;
+    private int ixx=0;
 
 
     @Override
@@ -73,6 +81,7 @@ public class LoginFB extends DeclareVariable {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.introduction_view);
         mAuth = FirebaseAuth.getInstance();
+        mDataBasexxx=FirebaseDatabase.getInstance().getReference();
         callbackManager = CallbackManager.Factory.create();
         sharedPreferences = getSharedPreferences("DATA", MODE_PRIVATE);
         mDataBase = FirebaseDatabase.getInstance().getReference();
@@ -139,7 +148,7 @@ public class LoginFB extends DeclareVariable {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            final FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null) {
                                 edit = sharedPreferences.edit();
                                 Log.e("USER", "Tên:" + user.getDisplayName());
@@ -160,10 +169,22 @@ public class LoginFB extends DeclareVariable {
                                                 return;
                                             }
                                         }
+                                        mDataBasexxx.child(user.getUid()).child("PASSWORD").setValue("").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                if (ixx==0){
+                                                    ixx=1;
+                                                    Toasty.success(LoginFB.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(LoginFB.this,HomeNote.class));
+                                                    finish();
+                                                }
 
-                                        Toasty.success(LoginFB.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(LoginFB.this,HomeNote.class));
-                                        finish();
+
+                                            }
+                                        });
+
+
+
 
                                     }
 
@@ -184,6 +205,20 @@ public class LoginFB extends DeclareVariable {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+    protected Boolean isActivityRunning(Class activityClass)
+    {
+        ActivityManager activityManager = (ActivityManager) getBaseContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningTaskInfo task : tasks) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
+                    return true;
+            }
+        }
+
+        return false;
     }
 }
 

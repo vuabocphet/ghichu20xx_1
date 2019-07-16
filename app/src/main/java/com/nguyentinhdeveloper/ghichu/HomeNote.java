@@ -1,20 +1,27 @@
 package com.nguyentinhdeveloper.ghichu;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -35,6 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.tu.loadingdialog.LoadingDailog;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -52,12 +60,14 @@ import com.squareup.picasso.Transformation;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class HomeNote extends DeclareVariable implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,13 +75,16 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
     ImageView urlfb;
     TextView namefb;
     TextView sum;
-
+    static String appPackageName = "com.nguyentinhdeveloper.ghichu";
+    private DatabaseReference databaseReference;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_home);
+        Bungee.fade(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Log.e("H", getHH() + "");
         Log.e("H", getMM() + "");
@@ -96,7 +109,7 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
     private void mapped() {
 
         baseData = new BaseData(this);
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
 //        anh xa view
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -142,6 +155,10 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
         startMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator.hasVibrator()) {
+                    vibrator.vibrate(150);
+                }
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
@@ -154,6 +171,11 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
         findViewById(R.id.addnote).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator.hasVibrator()) {
+                    vibrator.vibrate(150);
+                }
+                findViewById(R.id.addnote).startAnimation(AnimationUtils.loadAnimation(HomeNote.this, R.anim.zoom));
                 startActivity(new Intent(HomeNote.this, AddNote.class));
             }
         });
@@ -177,21 +199,21 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
     private void setGood() {
 
         if (getHH() >= 6 && getHH() < 12) {
-            imageView.setImageResource(R.drawable.binhminh_img);
+            //imageView.setImageResource(R.drawable.binhminh_img);
             good.setText(getString(R.string.morning));
             loichuc.setText(getString(R.string.loichuc_1));
             good_i = getString(R.string.loichuc_1);
             findViewById(R.id.addnote).setBackground(getResources().getDrawable(R.drawable.custom_gradient_binhminh));
         }
         if (getHH() >= 12 && getHH() < 18) {
-            imageView.setImageResource(R.drawable.hoanghon_img);
+            //imageView.setImageResource(R.drawable.hoanghon_img);
             good.setText(getString(R.string.afternoon));
             loichuc.setText(getString(R.string.loichuc_2));
             good_i = getString(R.string.loichuc_2);
             findViewById(R.id.addnote).setBackground(getResources().getDrawable(R.drawable.custom_gradient_hoanghon));
         }
         if (getHH() >= 18 || getHH() < 6) {
-            imageView.setImageResource(R.drawable.chaobuoitoi_img);
+            //imageView.setImageResource(R.drawable.chaobuoitoi_img);
             good.setText(getString(R.string.evening));
             loichuc.setText(getString(R.string.loichuc_3));
             good_i = getString(R.string.loichuc_3);
@@ -203,11 +225,25 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+
             case R.id.introduc:
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
                 break;
             case R.id.comment:
+                final String appPackageName = "com.nguyentinhdeveloper.ghichu";
+
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
                 break;
             case R.id.share:
+                share("https://play.google.com/store/apps/details?id=com.nguyentinhdeveloper.ghichu");
                 break;
             case R.id.pass:
                 String password = sharedPreferences.getString("PASSWORD", "");
@@ -253,12 +289,20 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
                                     }
                                     if (new CheckInternet().isInternetConnection(HomeNote.this)) {
                                         if (pass.getText().toString().trim().equals(sharedPreferences.getString("PASSWORD", ""))) {
-                                            //mDataBase.child(sharedPreferences.getString("id", "")).child("PASSWORD").setValue("");
-                                            edit = sharedPreferences.edit();
-                                            edit.putString("PASSWORD", "");
-                                            edit.putString("pass", "");
-                                            edit.commit();
-                                            dialoga.dismiss();
+                                            databaseReference.child(id_User_FB).child("PASSWORD").setValue("").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    edit = sharedPreferences.edit();
+                                                    edit.putString("PASSWORD", "");
+                                                    edit.putString("pass", "");
+                                                    edit.commit();
+                                                    dialoga.cancel();
+                                                    if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+                                                        finish();
+                                                    }
+                                                }
+                                            });
+
                                         } else {
                                             Toasty.error(HomeNote.this, "Không khớp", Toasty.LENGTH_SHORT).show();
                                         }
@@ -284,7 +328,7 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
                 break;
             case R.id.logout:
                 if (new CheckInternet().isInternetConnection(HomeNote.this)) {
-                    new Loading().loading(this, "Đang đăng xuất");
+                    new Loading().loading(this, "Đăng xuất");
                     LoginManager.getInstance().logOut();
                     edit = sharedPreferences.edit();
                     edit.putString("name", "");
@@ -429,7 +473,7 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thông báo");
-        builder.setMessage("Bạn có muốn xóa ghi chú\t" + subject + "\tkhông?");
+        builder.setMessage("Bạn có muốn xóa ghi chú \t" + subject + "\t không?");
         builder.setIcon(getResources().getDrawable(R.drawable.logo_note));
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -470,5 +514,152 @@ public class HomeNote extends DeclareVariable implements NavigationView.OnNaviga
 
     }
 
+    private void share(String txt) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent
+                .putExtra(Intent.EXTRA_TEXT, txt
+                );
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.facebook.orca");
+        try {
+            startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toasty.error(this, "Please Install Facebook Messenger", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    private void setClipboard(Context context, String text) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            Toast.makeText(context, "Đã copy", Toast.LENGTH_SHORT).show();
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Đã copy", text);
+            clipboard.setPrimaryClip(clip);
+        }
+        Toast toast = Toast.makeText(getApplicationContext(), "Đã copy", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.show();
+
+    }
+
+    public void clickItem(final ModelNote noteModel, final int i) {
+        final Dialog dialog = new Dialog(HomeNote.this, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(HomeNote.this).inflate(R.layout.item_view_chon, null);
+        dialog.setContentView(contentView);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels - DensityUtil.dp2px(HomeNote.this, 16f);
+        params.bottomMargin = DensityUtil.dp2px(HomeNote.this, 8f);
+        contentView.setLayoutParams(params);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+
+        TextView txtEdit;
+        TextView copy;
+        TextView copyaudio;
+        TextView share;
+        TextView txtDelete;
+
+        txtEdit = (TextView) dialog.findViewById(R.id.txtEdit);
+        copy = (TextView) dialog.findViewById(R.id.copy);
+        copyaudio = (TextView) dialog.findViewById(R.id.copyaudio);
+        share = (TextView) dialog.findViewById(R.id.share);
+        txtDelete = (TextView) dialog.findViewById(R.id.txtDelete);
+
+        txtEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //clickItems(noteModel, i);
+                Intent intent = new Intent(HomeNote.this, AddNote.class);
+                intent.putExtra("list", noteModel);
+                startActivity(intent);
+                //Toasty.error(HomeNote.this, "Tính năng đang phát triển", Toasty.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                share("Ghi chú:" + noteModel.getSubject() + "\n" + noteModel.getNode() + "\n" + "Link ảnh:" + noteModel.getImg() + "\n" + "Link audio:" + noteModel.getAudio());
+                dialog.dismiss();
+            }
+        });
+
+        txtDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        if (noteModel.getImg().isEmpty()) {
+            copy.setAlpha(0.3f);
+            copy.setClickable(false);
+        } else {
+            copy.setAlpha(1f);
+            copy.setClickable(true);
+            copy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setClipboard(HomeNote.this, noteModel.getImg());
+                    Intent i = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(noteModel.getImg()));
+                    startActivity(i);
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        if (noteModel.getAudio().isEmpty()) {
+            copyaudio.setAlpha(0.3f);
+            copyaudio.setClickable(false);
+        } else {
+            copyaudio.setAlpha(1f);
+            copyaudio.setClickable(true);
+            copyaudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setClipboard(HomeNote.this, noteModel.getAudio());
+                    Intent i = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(noteModel.getAudio()));
+                    startActivity(i);
+                    dialog.dismiss();
+                }
+            });
+        }
+        dialog.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
 
 }

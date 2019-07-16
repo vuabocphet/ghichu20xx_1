@@ -55,7 +55,9 @@ public class Screen extends DeclareVariable {
             @Override
             public void run() {
                 if (!password.equals("")){
-                    startActivity(new Intent(Screen.this,LockPassWord.class));
+                    Intent intent=new Intent(Screen.this,LockPassWord.class);
+                    intent.putExtra("hellopass","hello");
+                    startActivity(new Intent(intent));
                     finish();
                     return;
                 }
@@ -68,7 +70,7 @@ public class Screen extends DeclareVariable {
                     finish();
                 }
             }
-        },2500);
+        },1500);
     }
     private Integer getHH() {
         Date date = new Date();

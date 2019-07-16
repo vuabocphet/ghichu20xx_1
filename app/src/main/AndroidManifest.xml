@@ -9,12 +9,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_note"
+        android:icon="@drawable/icon_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo_note"
+        android:roundIcon="@drawable/icon_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LockPassWord"> </activity>
+        <activity android:name=".LockPassWord"></activity>
         <activity android:name=".AddNote" />
         <activity
             android:name=".DieuKhoanNguoiDung"
@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DieuKhoanUser" />
         <activity android:name=".LoginFB" />
         <activity android:name=".HomeNote" />
 
@@ -51,6 +50,15 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".AddWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/example_appwidget_info" />
+        </receiver>
     </application>
 
 </manifest>

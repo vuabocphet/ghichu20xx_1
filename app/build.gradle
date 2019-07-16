@@ -7,8 +7,8 @@ android {
         applicationId "com.nguyentinhdeveloper.ghichu"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName "2.0"
+        versionCode 5
+        versionName "2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

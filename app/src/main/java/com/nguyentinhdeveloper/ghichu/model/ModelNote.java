@@ -1,6 +1,8 @@
 package com.nguyentinhdeveloper.ghichu.model;
 
-public class ModelNote {
+import java.io.Serializable;
+
+public class ModelNote implements Serializable {
     public String id;
     public String subject;
     public String date;

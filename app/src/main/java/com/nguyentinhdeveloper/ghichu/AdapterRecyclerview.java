@@ -2,23 +2,11 @@ package com.nguyentinhdeveloper.ghichu;
 
 
 import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -29,13 +17,12 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 
-import java.io.File;
-import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 public class AdapterRecyclerview extends RecyclerView.Adapter<HodelRecycelerview> {
     private HomeNote context;
@@ -57,7 +44,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<HodelRecycelerview
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final HodelRecycelerview holder, int position) {
+    public void onBindViewHolder(@NonNull final HodelRecycelerview holder, final int position) {
 
         final ModelNote note = list.get(position);
         hodelRecycelerview = holder;
@@ -67,18 +54,22 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<HodelRecycelerview
             //holder.layout.setBackground(context.getResources().getDrawable(R.drawable.style_toolbar_c));
             holder.progressBar.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_binhminh));
             holder.relativeLayout.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_binhminh));
+            holder.seekbar.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_binhminh));
+
         }
         if (getHH() >= 12 && getHH() < 18) {
 
             // holder.layout.setBackground(context.getResources().getDrawable(R.drawable.style_toolbar_d));
             holder.progressBar.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_hoanghon));
             holder.relativeLayout.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_hoanghon));
+            holder.seekbar.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_hoanghon));
         }
         if (getHH() >= 18 || getHH() < 6) {
 
             //holder.layout.setBackground(context.getResources().getDrawable(R.drawable.style_toolbar_e));
             holder.progressBar.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_a));
             holder.relativeLayout.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_a));
+            holder.seekbar.setBackground(context.getResources().getDrawable(R.drawable.custom_gradient_a));
         }
 
         holder.subject.setText(note.getSubject());
@@ -120,14 +111,21 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<HodelRecycelerview
                 holder.textView.setVisibility(View.GONE);
                 holder.sumtextView.setVisibility(View.GONE);
                 holder.seekbar.setVisibility(View.VISIBLE);
+            }else {
+                holder.button.setVisibility(View.GONE);
+                holder.sumtextView.setVisibility(View.GONE);
+                holder.textView.setVisibility(View.GONE);
+                holder.seekbar.setVisibility(View.GONE);
             }
 
-        } else {
-            holder.button.setVisibility(View.GONE);
-            holder.sumtextView.setVisibility(View.GONE);
-            holder.textView.setVisibility(View.GONE);
-            holder.seekbar.setVisibility(View.GONE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.clickItem(note,position);
+            }
+        });
 
 
     }
@@ -169,6 +167,6 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<HodelRecycelerview
 
 
 
-   
+
 }
 
